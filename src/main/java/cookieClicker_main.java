@@ -9,7 +9,7 @@ public class cookieClicker_main {
     public static void main(String[] args) throws InterruptedException {
         System.setProperty("webdriver.chrome.driver", "C:\\Users\\ema7a\\Desktop\\chromedriver114\\chromedriver.exe");
         WebDriver driver = new ChromeDriver();
-        driver.manage().timeouts().implicitlyWait(3, TimeUnit.MINUTES);
+        driver.manage().timeouts().implicitlyWait(2, TimeUnit.MINUTES);
         driver.get("https://orteil.dashnet.org/cookieclicker/beta/");
         driver.manage().window().maximize();
 
@@ -47,9 +47,11 @@ public class cookieClicker_main {
             cursor.click();
         }
 
+        //buy the first grandma
         WebElement grandma = driver.findElement(By.id("product1"));
         grandma.click();
 
+        //closing achievements
         WebElement achievementsClose = driver.findElement(By.cssSelector("div[class='framed close sidenote']"));
 
         if (achievementsClose.isDisplayed()) {
