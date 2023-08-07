@@ -61,6 +61,4 @@ public class cookieClicker_main {
     }
 
 
-
-
 }
