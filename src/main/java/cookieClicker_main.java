@@ -9,7 +9,7 @@ public class cookieClicker_main {
     public static void main(String[] args) throws InterruptedException {
         System.setProperty("webdriver.chrome.driver", "C:\\Users\\ema7a\\Desktop\\chromedriver114\\chromedriver.exe");
         WebDriver driver = new ChromeDriver();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(3, TimeUnit.MINUTES);
         driver.get("https://orteil.dashnet.org/cookieclicker/beta/");
         driver.manage().window().maximize();
 
@@ -40,14 +40,15 @@ public class cookieClicker_main {
 
         //buy 10 cursors
         for (int i = 0; i < 10; i++) {
-            Thread.sleep(2000);
-            String cursorPrice = driver.findElement(By.id("productPrice0")).getText();
-            String cookieCount = driver.findElement(By.id("cookies")).getText();
-
-            if (cookieCount.equals(cursorPrice)) {
-                cursor.click();
+            for (int j = 0; j < 50; j++) {
+                theBigCookie.click();
             }
+            Thread.sleep(3000);
+            cursor.click();
         }
+
+        WebElement grandma = driver.findElement(By.id("product1"));
+        grandma.click();
 
         WebElement achievementsClose = driver.findElement(By.cssSelector("div[class='framed close sidenote']"));
 
@@ -56,5 +57,8 @@ public class cookieClicker_main {
         }
 
     }
+
+
+
 
 }
