@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
 
 public class cookieClicker_main {
     public static void main(String[] args) throws InterruptedException {
-        System.setProperty("webdriver.chrome.driver", "C:\\Users\\ema7a\\Desktop\\chromedriver114\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "C:\\Users\\ema7a\\Desktop\\chromedriver-win64\\chromedriver.exe");
         WebDriver driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(2, TimeUnit.MINUTES);
         driver.get("https://orteil.dashnet.org/cookieclicker/beta/");
@@ -31,20 +31,28 @@ public class cookieClicker_main {
         //start clicking and buy the first cursor
         WebElement theBigCookie = driver.findElement(By.id("bigCookie"));
         for (int i = 0; i < 15; i++) {
+            Thread.sleep(150);
             theBigCookie.click();
         }
         Thread.sleep(2000);
         WebElement cursor = driver.findElement(By.id("product0"));
         cursor.click();
-        //driver.findElement(By.id("productPrice0")).click();
 
         //buy 10 cursors
         for (int i = 0; i < 10; i++) {
-            for (int j = 0; j < 50; j++) {
+            for (int j = 0; j < 10; j++) {
                 theBigCookie.click();
+                Thread.sleep(200);
             }
-            Thread.sleep(3000);
-            cursor.click();
+            String[] cookieAmount = driver.findElement(By.cssSelector("div[id='cookies']")).getText().split(" ");
+            String cookieAmountString = cookieAmount[0];
+            int cookieCount = Integer.parseInt(cookieAmountString);
+
+            String cookiePriceString = driver.findElement(By.id("productPrice0")).getText();
+            int cursorPrice = Integer.parseInt(cookiePriceString);
+            if (cookieCount > cursorPrice) {
+                cursor.click();
+            }
         }
 
         //buy the first grandma
