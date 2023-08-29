@@ -40,7 +40,7 @@ public class cookieClicker_main {
 
         //buy 10 cursors
         for (int i = 0; i < 10; i++) {
-            for (int j = 0; j < 10; j++) {
+            for (int j = 0; j < 30; j++) {
                 theBigCookie.click();
                 Thread.sleep(200);
             }
@@ -48,16 +48,38 @@ public class cookieClicker_main {
             String cookieAmountString = cookieAmount[0];
             int cookieCount = Integer.parseInt(cookieAmountString);
 
-            String cookiePriceString = driver.findElement(By.id("productPrice0")).getText();
-            int cursorPrice = Integer.parseInt(cookiePriceString);
+            String cursorPriceString = driver.findElement(By.id("productPrice0")).getText();
+            int cursorPrice = Integer.parseInt(cursorPriceString);
             if (cookieCount > cursorPrice) {
                 cursor.click();
             }
+        }
+        for (int i = 0; i < 100; i++) {
+            theBigCookie.click();
+            Thread.sleep(100);
         }
 
         //buy the first grandma
         WebElement grandma = driver.findElement(By.id("product1"));
         grandma.click();
+
+        //buy 10 grandmas
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 50; j++) {
+                theBigCookie.click();
+                Thread.sleep(200);
+            }
+            String[] cookieAmount = driver.findElement(By.cssSelector("div[id='cookies']")).getText().split(" ");
+            String cookieAmountString = cookieAmount[0];
+            int cookieCount = Integer.parseInt(cookieAmountString);
+
+            String grandmaPriceString = driver.findElement(By.id("productPrice1")).getText();
+            int grandmaPrice = Integer.parseInt(grandmaPriceString);
+            if (cookieCount > grandmaPrice) {
+                grandma.click();
+            }
+        }
+
 
         //closing achievements
         WebElement achievementsClose = driver.findElement(By.cssSelector("div[class='framed close sidenote']"));
