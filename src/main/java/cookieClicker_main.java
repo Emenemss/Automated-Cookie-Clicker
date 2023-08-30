@@ -3,7 +3,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-
 import static java.util.concurrent.TimeUnit.*;
 
 public class cookieClicker_main {
@@ -17,7 +16,7 @@ public class cookieClicker_main {
         // select the language and accept all cookies
         driver.findElement(By.id("langSelect-EN")).click();
 
-        Thread.sleep(500);
+        Thread.sleep(1000);
         driver.findElement(By.cssSelector("a[class='cc_btn cc_btn_accept_all']")).click();
 
         // choose a random bakery name
@@ -33,8 +32,8 @@ public class cookieClicker_main {
 
         // buy 10 cursors
         WebElement theBigCookie = driver.findElement(By.id("bigCookie"));
-        WebElement cursor = driver.findElement(By.id("product0"));
 
+        WebElement cursor = driver.findElement(By.id("product0"));
         int cursorTotal = 0;
         while (cursorTotal < 10) {
             theBigCookie.click();
@@ -80,9 +79,13 @@ public class cookieClicker_main {
 
             String[] cookieAmount = driver.findElement(By.cssSelector("div[id='cookies']")).getText().split(" ");
             String cookieAmountArr = cookieAmount[0];
+            cookieAmountArr = cookieAmountArr.replace(",", "");
             int cookieCount = Integer.parseInt(cookieAmountArr);
 
-            int farmPrice = Integer.parseInt(driver.findElement(By.id("productPrice2")).getText());
+            String farmPriceFull = driver.findElement(By.id("productPrice2")).getText();
+            farmPriceFull = farmPriceFull.replace(",", "");
+            int farmPrice = Integer.parseInt(farmPriceFull);
+
             if (cookieCount > farmPrice) {
                 Thread.sleep(500);
                 farm.click();
