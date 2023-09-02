@@ -2,10 +2,14 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 import static java.util.concurrent.TimeUnit.*;
 
-public class cookieClicker_main {
+public class cookieClickerMain {
     public static void main(String[] args) throws InterruptedException {
         System.setProperty("webdriver.chrome.driver", "C:\\Users\\ema7a\\Desktop\\chromedriver-win64\\chromedriver.exe");
         WebDriver driver = new ChromeDriver();
@@ -29,7 +33,6 @@ public class cookieClicker_main {
         }
         driver.findElement(By.id("promptOption0")).click();
 
-
         // buy 10 cursors
         WebElement theBigCookie = driver.findElement(By.id("bigCookie"));
 
@@ -51,6 +54,7 @@ public class cookieClicker_main {
                 cursorTotal++;
             }
         }
+
         // buy 10 grandmas
         WebElement grandma = driver.findElement(By.id("product1"));
         int grandmaTotal = 0;
@@ -93,6 +97,55 @@ public class cookieClicker_main {
             }
         }
 
+        // buy 10 mines
+        WebElement mine = driver.findElement(By.id("product3"));
+        int mineTotal = 0;
+        while (mineTotal < 10) {
+            theBigCookie.click();
+            Thread.sleep(200);
+
+            String[] cookieAmount = driver.findElement(By.cssSelector("div[id='cookies']")).getText().split(" ");
+            String cookieAmountArr = cookieAmount[0];
+            cookieAmountArr = cookieAmountArr.replace(",", "");
+            int cookieCount = Integer.parseInt(cookieAmountArr);
+
+            String minePriceFull = driver.findElement(By.id("productPrice3")).getText();
+            minePriceFull = minePriceFull.replace(",", "");
+            int minePrice = Integer.parseInt(minePriceFull);
+
+            if (cookieCount > minePrice) {
+                Thread.sleep(500);
+                mine.click();
+                mineTotal++;
+            }
+        }
+
+        // buy 10 factories
+        WebElement factory = driver.findElement(By.id("product4"));
+        int factoryTotal = 0;
+        while (factoryTotal < 10) {
+            theBigCookie.click();
+            Thread.sleep(200);
+
+            String cookieAmountText = driver.findElement(By.cssSelector("div[id='cookies']")).getText();
+            cookieAmountText = cookieAmountText.replaceAll(" ", "\n");
+            String[] cookieAmount = cookieAmountText.split("\n");
+
+            String cookieAmountArr = cookieAmount[0];
+            cookieAmountArr = cookieAmountArr.replace(",", "");
+            int cookieCount = Integer.parseInt(cookieAmountArr);
+
+            String factoryPriceFull = driver.findElement(By.id("productPrice4")).getText();
+            factoryPriceFull = factoryPriceFull.replace(",", "");
+            int factoryPrice = Integer.parseInt(factoryPriceFull);
+
+            if (cookieCount > factoryPrice) {
+                Thread.sleep(500);
+                factory.click();
+                factoryTotal++;
+            }
+        }
+
         // close achievements
         WebElement achievementsClose = driver.findElement(By.cssSelector("div[class='framed close sidenote']"));
 
@@ -100,8 +153,11 @@ public class cookieClicker_main {
             achievementsClose.click();
         }
 
+        WebDriverWait w = new WebDriverWait(driver, Duration.ofMinutes(60));
+        w.until(ExpectedConditions.textToBePresentInElementLocated(By.cssSelector("div[id='cookies']"), "million"));
+        System.out.println("Congratulations! You baked a million cookies!");
+
+
     }
 
 }
-
-
